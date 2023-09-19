@@ -51,6 +51,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $route['default_controller'] = 'welcome';
 $route['dokter_tujuan'] = 'pages/dokter_tujuan';
+$route['konfirmasi_data'] = 'pages/konfirmasi_data';
+$route['data_pasien'] = 'pages/data_pasien';
 $route['dokter_tujuan_mid'] = 'pages/dokter_tujuan_mid';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
