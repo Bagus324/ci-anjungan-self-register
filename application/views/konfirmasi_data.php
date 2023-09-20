@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Konfirmasi Data</title>
 
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
         .header-container {
@@ -111,7 +112,7 @@
                             </div>
                             <label for="tgl_kunjungan" class="col-lg-auto col-lg-form-label custom-label" style="margin-left: 60px;">Tgl Kunjungan</label>
                             <div class="col-lg-auto">
-                                <input id="tgl_kunjungan" type="date" class="form-control form-control-lg custom-input" id="tgl_kunjungan">
+                                <input id="tgl_kunjungan" type="text" placeholder="DD-MM-YYYY" class="form-control form-control-lg custom-input" id="tgl_kunjungan">
                             </div>
                         </div>
                     </div>
@@ -168,39 +169,51 @@
         </form>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        function fillToday() {
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); 
-            var yyyy = today.getFullYear();
+        $(document).ready(function() {
+            $('#prosesButton').click(function() {
+                Swal.fire({
+                    title: 'Konfirmasi Data',
+                    text: 'Apakah Anda yakin seluruh data Anda sudah sesuai?',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: '<b>Ya, Proses</b>', 
+                    cancelButtonText: '<b>Batal</b>',
+                    confirmButtonColor: '#07AE53',
+                    cancelButtonColor: '#BC0707',
+                    customClass: {
+                        confirmButton: 'custom-confirm-button-class',
+                        cancelButton: 'custom-cancel-button-class'
+                    }    
+                })
+            });
 
-            var formattedDate = yyyy + '-' + mm + '-' + dd;
-            document.getElementById('tgl_kunjungan').value = formattedDate;
-        }
+            $(function() {
+                $("#tgl_kunjungan").datepicker({
+                    dateFormat: "dd-mm-yy" 
+                });
 
-        document.getElementById('prosesButton').addEventListener('click', function() {
-            Swal.fire({
-                title: 'Konfirmasi Data',
-                text: 'Apakah Anda yakin seluruh data Anda sudah sesuai?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: '<b>Ya, Proses</b>', 
-                cancelButtonText: '<b>Batal</b>',
-                confirmButtonColor: '#07AE53',
-                cancelButtonColor: '#BC0707',
-                customClass: {
-                    confirmButton: 'custom-confirm-button-class',
-                    cancelButton: 'custom-cancel-button-class'
-                }    
-            })
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1; 
+                var yyyy = today.getFullYear();
+
+                if (dd < 10) {
+                    dd = '0' + dd;
+                }
+
+                if (mm < 10) {
+                    mm = '0' + mm;
+                }
+
+                var formattedDate = dd + '-' + mm + '-' + yyyy;
+                $('#tgl_kunjungan').val(formattedDate);
+            });
         });
-
-        fillToday();
-</script>
-
-
+    </script>
 </body>
 </html>
